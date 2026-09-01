@@ -40,7 +40,6 @@ def load_models():
 
     return tfidf, model, scaler, selected_features
 
-tfidf, model, scaler, selected_features = load_models()
 
 tfidf, model, scaler, selected_features = load_models()
 lemmatizer = WordNetLemmatizer()
