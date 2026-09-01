@@ -19,7 +19,6 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from scipy.sparse import hstack
 import scipy.sparse as sp
-
 from pathlib import Path
 
 @st.cache_resource
