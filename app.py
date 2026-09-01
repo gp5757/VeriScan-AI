@@ -1,6 +1,13 @@
+import os
 import nltk
-nltk.download('stopwords')
-nltk.download('wordnet')
+
+nltk_data_dir = os.path.join(os.getcwd(), 'nltk_data')
+os.makedirs(nltk_data_dir, exist_ok=True)
+nltk.data.path.append(nltk_data_dir)
+nltk.download('stopwords', download_dir=nltk_data_dir, quiet=True)
+nltk.download('wordnet', download_dir=nltk_data_dir, quiet=True)
+nltk.download('omw-1.4', download_dir=nltk_data_dir, quiet=True)
+import nltk
 import streamlit as st
 import pickle
 import re
@@ -13,16 +20,25 @@ from nltk.stem import WordNetLemmatizer
 from scipy.sparse import hstack
 import scipy.sparse as sp
 
+from pathlib import Path
+
 @st.cache_resource
 def load_models():
-    with open('tfidf_vectorizer.pkl', 'rb') as f:
+
+    BASE_DIR = Path(__file__).resolve().parent
+
+    with open(BASE_DIR / 'tfidf_vectorizer.pkl', 'rb') as f:
         tfidf = pickle.load(f)
-    with open('best_model.pkl', 'rb') as f:
+
+    with open(BASE_DIR / 'best_model.pkl', 'rb') as f:
         model = pickle.load(f)
-    with open('scaler.pkl', 'rb') as f:
+
+    with open(BASE_DIR / 'scaler.pkl', 'rb') as f:
         scaler = pickle.load(f)
-    with open('selected_features.pkl', 'rb') as f:
+
+    with open(BASE_DIR / 'selected_features.pkl', 'rb') as f:
         selected_features = pickle.load(f)
+
     return tfidf, model, scaler, selected_features
 
 tfidf, model, scaler, selected_features = load_models()
